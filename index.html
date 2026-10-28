@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>First Pass Approval</title>
+  <meta name="description" content="A fire sprinkler design package walkthrough for a contractor: which NFPA standard applies and the mixed-use trap, what actually gets a submittal rejected, the complete submittal checklist, realistic turnaround, and per-project pricing.">
+  <meta name="robots" content="noindex">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="First Pass Approval">
+  <meta property="og:description" content="A fire sprinkler design package walkthrough for a contractor: which NFPA standard applies and the mixed-use trap, what actually gets a submittal rejected, the complete submittal checklist, realistic turnaround, and per-project pricing.">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232E5BBA'/%3E%3Cg stroke='white' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M9 10h14'/%3E%3Cpath d='M9 16h14'/%3E%3Cpath d='M9 22h8'/%3E%3C/g%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@600;700&family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    /* Document skeleton. The artifact runtime supplies these; a standalone
+       deploy declares them itself. [hidden] is load-bearing: the tab panels
+       are toggled with el.hidden. */
+    :root{
+      color-scheme: light;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    html{ -webkit-text-size-adjust: 100%; }
+    body{ margin: 0; }
+    img{ max-width: 100%; }
+    [hidden]{ display: none !important; }
+  </style>
+  <style>
+/* Layout: a drafting sheet. Red is the fire-protection convention for sprinkler
+   piping, used here only for things that stop a submittal. */
+:root{
+  --paper:#F4F3F0; --surface:#FFFFFF; --sunk:#E9E7E2;
+  --ink:#17181A; --dim:#565853; --faint:#8B8C86;
+  --line:#DEDCD6; --line2:#C3C0B8;
+  --fp:#B5342B;          /* fire protection red */
+  --draft:#2D5F8B;       /* drafting blue */
+  --ok:#2B6B46; --warn:#9B6A12;
+
+  --display:'Archivo Narrow','Arial Narrow',Arial,sans-serif;
+  --body:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --paper:#131312; --surface:#1C1C1A; --sunk:#171715;
+  --ink:#EFEEEA; --dim:#A5A49D; --faint:#747269;
+  --line:#2B2B28; --line2:#3E3E3A;
+  --fp:#E0655A; --draft:#6FA3CF; --ok:#4BAE7D; --warn:#D0A144;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#131312; --surface:#1C1C1A; --sunk:#171715;
+  --ink:#EFEEEA; --dim:#A5A49D; --faint:#747269;
+  --line:#2B2B28; --line2:#3E3E3A;
+  --fp:#E0655A; --draft:#6FA3CF; --ok:#4BAE7D; --warn:#D0A144;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--surface)}
+.wrap{max-width:1160px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+.masthead{position:sticky;top:env(safe-area-inset-top,0px);z-index:19;background:var(--surface);border-bottom:1px solid var(--line)}
+.mast-in{display:flex;align-items:center;gap:12px;padding-block:13px;flex-wrap:wrap}
+.brand{font-family:var(--display);font-weight:700;font-size:21px;margin:0;letter-spacing:.01em;text-transform:uppercase}
+.brand span{color:var(--fp)}
+.tagline{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint)}
+.tbtn{margin-left:auto;font-size:12.5px;font-weight:500;background:var(--sunk);color:var(--dim);
+  border:1px solid var(--line);border-radius:7px;padding:6px 12px;cursor:pointer;font-family:inherit}
+.tbtn:hover{color:var(--ink);border-color:var(--line2)}
+
+.rail{display:flex;overflow-x:auto;border-bottom:1px solid var(--line);background:var(--surface);
+  position:sticky;top:calc(env(safe-area-inset-top,0px) + 55px);z-index:18}
+.rail-in{display:flex;gap:2px}
+.tab{appearance:none;background:none;border:0;border-bottom:3px solid transparent;cursor:pointer;
+  padding:12px 15px 9px;font-family:inherit;font-size:13.5px;font-weight:500;color:var(--dim);white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--fp);border-bottom-color:var(--fp);font-weight:600}
+.tab em{font-family:var(--mono);font-style:normal;font-size:9.5px;color:var(--faint);margin-left:6px;vertical-align:1px}
+
+main{padding-block:26px 40px}
+.lede{max-width:65ch;margin:0 0 20px}
+.lede h2{font-family:var(--display);font-size:clamp(26px,4.2vw,38px);font-weight:700;line-height:1.08;
+  margin:0 0 9px;text-wrap:balance;text-transform:uppercase;letter-spacing:.005em}
+.lede p{margin:0;color:var(--dim);font-size:14.5px}
+
+.note{display:flex;gap:11px;background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--warn);border-radius:6px;padding:12px 15px;margin-bottom:20px;font-size:13.5px}
+.note.good{border-left-color:var(--ok)} .note.bad{border-left-color:var(--fp)}
+.note strong{color:var(--warn);font-weight:700;white-space:nowrap}
+.note.good strong{color:var(--ok)} .note.bad strong{color:var(--fp)}
+.note p{margin:0;color:var(--dim)}
+
+.lab{display:grid;grid-template-columns:292px minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:880px){ .lab{grid-template-columns:1fr} }
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.panel h3,.stage-h h3{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);font-weight:500;margin:0 0 12px}
+.ctl{margin-bottom:14px}.ctl:last-child{margin-bottom:0}
+.ctl-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;gap:10px}
+.ctl-h label{font-size:12.5px;font-weight:500}
+.ctl-h output{font-family:var(--mono);font-size:11.5px;color:var(--draft);font-weight:600}
+input[type=range]{width:100%;accent-color:var(--draft);margin:0}
+select{width:100%;font-family:inherit;font-size:13px;padding:8px 9px;border-radius:7px;border:1px solid var(--line);background:var(--sunk);color:var(--ink)}
+.seg{display:flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.seg button{flex:1;appearance:none;cursor:pointer;background:var(--sunk);border:0;padding:8px 5px;
+  font-family:inherit;font-size:12px;font-weight:600;color:var(--dim)}
+.seg button[aria-pressed="true"]{background:var(--draft);color:#fff}
+:where(button,select,input,a):focus-visible{outline:2px solid var(--fp);outline-offset:2px}
+
+.stage{background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:16px}
+.stage-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+.stage-h .k{font-family:var(--mono);font-size:10.5px;color:var(--faint)}
+
+.verdict{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--draft);border-radius:7px;padding:17px 18px}
+.verdict .std{font-family:var(--display);font-size:34px;font-weight:700;line-height:1;margin:0 0 6px;text-transform:uppercase}
+.verdict .why{font-size:13.5px;color:var(--dim);margin:0}
+.flags{display:grid;gap:8px;margin-top:13px}
+.flag{display:grid;grid-template-columns:70px minmax(0,1fr);gap:11px;background:var(--surface);
+  border:1px solid var(--line);border-radius:7px;padding:11px 13px;font-size:12.5px}
+.flag .t{font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  border-radius:4px;padding:4px 0;text-align:center;height:fit-content}
+.flag .t.chk{background:color-mix(in srgb,var(--warn) 17%,transparent);color:var(--warn)}
+.flag .t.no{background:color-mix(in srgb,var(--fp) 15%,transparent);color:var(--fp)}
+.flag .t.ok{background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ok)}
+.flag b{display:block;margin-bottom:2px}
+.flag span{color:var(--dim)}
+
+.tbl-w{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface);margin-top:15px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+  font-weight:500;padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th.r,td.r{text-align:right}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td code{font-family:var(--mono);font-size:11.5px;background:var(--sunk);padding:2px 6px;border-radius:4px}
+.pill{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.pill.ok{background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ok)}
+.pill.no{background:color-mix(in srgb,var(--fp) 15%,transparent);color:var(--fp)}
+.pill.mid{background:color-mix(in srgb,var(--warn) 17%,transparent);color:var(--warn)}
+
+.steps{display:grid;gap:9px}
+.step{display:grid;grid-template-columns:26px minmax(0,1fr);gap:12px;background:var(--surface);
+  border:1px solid var(--line);border-radius:8px;padding:13px 15px}
+.step .n{font-family:var(--mono);font-size:11.5px;font-weight:600;color:#fff;background:var(--fp);
+  border-radius:5px;display:grid;place-items:center;height:24px}
+.step b{display:block;font-size:13px;margin-bottom:3px}
+.step p{margin:0;font-size:12.5px;color:var(--dim)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:14px}
+.card{background:var(--surface);padding:13px 15px}
+.card .l{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:5px}
+.card .v{font-family:var(--display);font-size:25px;font-weight:700;display:block;line-height:1}
+.card .s{font-size:11.5px;color:var(--dim);display:block;margin-top:4px}
+
+.foot{border-top:1px solid var(--line);margin-top:32px;padding-block:20px 10px;color:var(--faint);
+  font-family:var(--mono);font-size:10.5px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap mast-in">
+    <h1 class="brand">First Pass<span>.</span> Approval<span>.</span></h1>
+    <span class="tagline">prepared for Bay Fire Sprinklers</span>
+    <button class="tbtn" id="theme" type="button">Theme</button>
+  </div>
+</header>
+
+<div class="rail"><div class="wrap rail-in" role="tablist" aria-label="Sections">
+  <button class="tab" role="tab" aria-selected="true"  aria-controls="p1" id="t1" type="button">Standard<em>01</em></button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="p2" id="t2" type="button">Rejections<em>02</em></button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="p3" id="t3" type="button">Package<em>03</em></button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="p4" id="t4" type="button">Turnaround<em>04</em></button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="p5" id="t5" type="button">Pricing<em>05</em></button>
+</div></div>
+
+<main class="wrap">
+
+<!-- ======== 01 STANDARD ======== -->
+<section id="p1" role="tabpanel" aria-labelledby="t1">
+  <div class="lede">
+    <h2>Which standard applies, and the one that catches people</h2>
+    <p>Getting 13 against 13R wrong is not a drawing error, it is a different system, a different price and
+       a different schedule. Most of the time it is obvious. The mixed-use case is the one that moves a
+       whole building.</p>
+  </div>
+
+  <div class="lab">
+    <div class="panel">
+      <h3>The building</h3>
+      <div class="ctl">
+        <div class="ctl-h"><label for="occ">Occupancy</label></div>
+        <select id="occ">
+          <option value="sf">One or two family dwelling</option>
+          <option value="town">Townhouse</option>
+          <option value="res" selected>Multifamily residential</option>
+          <option value="comm">Commercial, business or mercantile</option>
+          <option value="assembly">Assembly, educational or institutional</option>
+          <option value="storage">Storage or warehouse</option>
+        </select>
+      </div>
+      <div class="ctl">
+        <div class="ctl-h"><label for="stories">Storeys above grade</label><output id="storiesO">4</output></div>
+        <input type="range" id="stories" min="1" max="12" step="1" value="4">
+      </div>
+      <div class="ctl">
+        <div class="ctl-h"><label for="height">Height above grade</label><output id="heightO">52 ft</output></div>
+        <input type="range" id="height" min="10" max="120" step="2" value="52">
+      </div>
+      <div class="ctl">
+        <div class="ctl-h"><label>Any non-residential occupancy</label></div>
+        <div class="seg">
+          <button id="mixNo" aria-pressed="true" type="button">No</button>
+          <button id="mixYes" aria-pressed="false" type="button">Yes</button>
+        </div>
+      </div>
+      <div class="note" style="margin:15px 0 0"><strong>Always</strong>
+        <p>Confirm against the locally adopted code and amendments. The AHJ's version is the one that
+           governs, not the current NFPA edition.</p></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-h"><h3>Applies</h3><span class="k" id="stdNote">residential</span></div>
+      <div class="verdict" id="verdict"></div>
+      <div class="flags" id="flags"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 02 REJECTIONS ======== -->
+<section id="p2" role="tabpanel" aria-labelledby="t2" hidden>
+  <div class="lede">
+    <h2>What actually gets a package sent back</h2>
+    <p>Reviewers reject submittals for documentation and consistency problems far more often than for
+       anything exotic. Every one of these is preventable at the desk, before it costs you a cycle.</p>
+  </div>
+
+  <div class="tbl-w" style="margin-top:0"><table>
+    <thead><tr><th>Comment</th><th>Why it happens</th><th>Prevented by</th></tr></thead>
+    <tbody>
+      <tr><td><b>Drawings and calcs disagree</b></td>
+        <td>The design area on the plan is not the design area in the calculations. Usually a revision applied to one and not the other.</td>
+        <td><span class="pill ok">Single source</span> Calcs regenerated from the final layout, never carried forward from an earlier revision.</td></tr>
+      <tr><td><b>Flow test data stale or missing</b></td>
+        <td>Many jurisdictions will not accept a flow test older than twelve months at the date of application.</td>
+        <td><span class="pill ok">Checked first</span> Test date confirmed against the AHJ's limit before the layout starts, not at submittal.</td></tr>
+      <tr><td><b>Wrong temperature rating near heat</b></td>
+        <td>Heads near unit heaters, skylights, cooking equipment or mechanical rooms left at ordinary rating. One of the most common comments there is.</td>
+        <td><span class="pill ok">Walked the ceiling</span> Heat sources identified from the mechanical drawings during layout.</td></tr>
+      <tr><td><b>Remote area not marked</b></td>
+        <td>The most hydraulically demanding area has to be identified on the drawing. Some jurisdictions also refuse pipe schedule design outright.</td>
+        <td><span class="pill ok">On the sheet</span> Remote area hatched and labelled, with the node reference tying it to the calculation.</td></tr>
+      <tr><td><b>Fitting count does not match</b></td>
+        <td>A mislabelled main or a missing elbow callout changes the equivalent length, which changes the pressure loss, which changes the result.</td>
+        <td><span class="pill ok">Reconciled</span> Fitting schedule checked against the calculation node by node before issue.</td></tr>
+      <tr><td><b>Package incomplete</b></td>
+        <td>Missing cut sheets, water supply results, underground details or fire alarm coordination notes.</td>
+        <td><span class="pill ok">Checklist</span> See tab 03. Built per jurisdiction, not from memory.</td></tr>
+      <tr><td><b>Trade conflict</b></td>
+        <td>Sprinkler mains against ductwork, structure or lighting. Found on site rather than on paper.</td>
+        <td><span class="pill mid">Coordination</span> Backgrounds overlaid at layout stage where current mechanical and structural drawings exist.</td></tr>
+      <tr><td><b>Post-approval head relocation</b></td>
+        <td>A ceiling or partition change after approval. Triggers recalculation and resubmittal, which can add weeks.</td>
+        <td><span class="pill no">Not preventable</span> But it is schedulable. See tab 04.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note bad" style="margin-top:18px"><strong>The resubmittal itself</strong>
+    <p>Where a package does come back, the response matters as much as the fix. An itemised response letter
+       with numbered items matching the reviewer's comments, and a complete drawing set rather than only the
+       changed sheets, is what some jurisdictions explicitly ask for. It also gets the second review done
+       faster, because the reviewer is not hunting for what moved.</p></div>
+</section>
+
+<!-- ======== 03 PACKAGE ======== -->
+<section id="p3" role="tabpanel" aria-labelledby="t3" hidden>
+  <div class="lede">
+    <h2>What goes in a complete submittal</h2>
+    <p>Working plans per NFPA 13 are the base. Everything after that is the jurisdiction's own list, which
+       is why this gets rebuilt per AHJ rather than reused.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step"><span class="n">1</span><div><b>Working plans</b>
+      <p>Scaled plan of each floor and the ceiling conditions, sprinkler type, temperature rating, orifice
+         and K-factor, pipe sizes and lengths, hanger and bracing locations, riser detail, and the
+         hydraulic reference nodes.</p></div></div>
+    <div class="step"><span class="n">2</span><div><b>Hydraulic calculations</b>
+      <p>Density and area of operation from the applicable curve for the hazard classification, node-by-node
+         losses, the remote area identified, and the demand plotted against the supply curve with the safety
+         margin shown.</p></div></div>
+    <div class="step"><span class="n">3</span><div><b>Water supply information</b>
+      <p>Flow test with date, location, static, residual and flow, inside the jurisdiction's validity window.
+         Where a pump or tank is involved, the curve and the acceptance basis.</p></div></div>
+    <div class="step"><span class="n">4</span><div><b>Manufacturer data</b>
+      <p>Cut sheets for every device specified: sprinklers, valves, switches, gauges, backflow. Listed and
+         matching what is actually on the drawing, which is a surprisingly common mismatch.</p></div></div>
+    <div class="step"><span class="n">5</span><div><b>Underground and service detail</b>
+      <p>Where the supply enters, the lead-in, thrust blocking and the flush and hydrostatic test basis.</p></div></div>
+    <div class="step"><span class="n">6</span><div><b>Coordination notes</b>
+      <p>Fire alarm interface, monitored valves and flow switches, and anything the mechanical or electrical
+         package depends on.</p></div></div>
+    <div class="step"><span class="n">7</span><div><b>Certification and cover</b>
+      <p>The designer's certification referencing the specific construction documents, and the forms the
+         jurisdiction actually asks for, in the order they ask for them.</p></div></div>
+  </div>
+
+  <div class="note good" style="margin-top:18px"><strong>What I would want from you at the start</strong>
+    <p>The architectural and mechanical backgrounds, the occupancy and hazard classification agreed, a
+       current flow test, and the AHJ. That last one is not a formality: the local amendments decide half of
+       what goes in the package, and a submittal built for the wrong jurisdiction is a wasted cycle before
+       anyone has drawn a line.</p></div>
+</section>
+
+<!-- ======== 04 TURNAROUND ======== -->
+<section id="p4" role="tabpanel" aria-labelledby="t4" hidden>
+  <div class="lede">
+    <h2>Turnaround, and where the calendar actually goes</h2>
+    <p>You asked for typical turnaround. The design time is the predictable part. The review cycles are not,
+       and that is what decides whether your crew lands on schedule.</p>
+  </div>
+
+  <div class="tbl-w" style="margin-top:0"><table>
+    <thead><tr><th>Project</th><th class="r">Design</th><th class="r">Revision</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><b>13D single family</b></td><td class="num r">2 to 3 days</td><td class="num r">same day</td>
+        <td>Straightforward unless the water supply is marginal, which is where these go wrong.</td></tr>
+      <tr><td><b>13R multifamily, per building</b></td><td class="num r">5 to 8 days</td><td class="num r">1 to 2 days</td>
+        <td>Repeating unit types compress this considerably. The first building carries the effort.</td></tr>
+      <tr><td><b>13 commercial tenant improvement</b></td><td class="num r">3 to 5 days</td><td class="num r">1 day</td>
+        <td>Existing conditions and the as-built accuracy decide this more than the floor area does.</td></tr>
+      <tr><td><b>13 ground-up commercial</b></td><td class="num r">8 to 15 days</td><td class="num r">2 to 3 days</td>
+        <td>Driven by storage arrangement and ceiling complexity rather than square footage.</td></tr>
+      <tr><td><b>Calculation only, layout supplied</b></td><td class="num r">1 to 2 days</td><td class="num r">same day</td>
+        <td>Useful when you have a layout and need the numbers to stand up.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="cards">
+    <div class="card"><span class="l">Design time</span><span class="v">Predictable</span><span class="s">quoted per project, fixed</span></div>
+    <div class="card"><span class="l">AHJ review</span><span class="v">Theirs</span><span class="s">varies by jurisdiction and season</span></div>
+    <div class="card"><span class="l">Revision response</span><span class="v">24 to 48 h</span><span class="s">from receipt of comments</span></div>
+    <div class="card"><span class="l">Post-approval change</span><span class="v">Up to 4 wks</span><span class="s">recalculation plus resubmittal</span></div>
+  </div>
+
+  <div class="note bad" style="margin-top:16px"><strong>The one worth planning around</strong>
+    <p>A head relocation after approval triggers recalculation and a fresh submittal, and that can add up to
+       four weeks to a schedule. It is not a design failure and it is not preventable from my side. What is
+       preventable is being surprised by it: if a ceiling plan is still moving, I will say so before the
+       package goes in rather than after.</p></div>
+</section>
+
+<!-- ======== 05 PRICING ======== -->
+<section id="p5" role="tabpanel" aria-labelledby="t5" hidden>
+  <div class="lede">
+    <h2>Per project, with hourly where it fits better</h2>
+    <p>You asked for either. Fixed per project is better for both of us on anything with a defined scope,
+       because you can price the job before you win it. Hourly is honest for the work that cannot be scoped
+       in advance.</p>
+  </div>
+
+  <div class="tbl-w" style="margin-top:0"><table>
+    <thead><tr><th>Scope</th><th class="r">Fixed fee</th><th>Includes</th></tr></thead>
+    <tbody>
+      <tr><td><b>13D single family</b></td><td class="num r">$450 to $750</td>
+        <td>Layout, calculations, working plans, one revision cycle</td></tr>
+      <tr><td><b>13R multifamily, first building</b></td><td class="num r">$1,400 to $2,800</td>
+        <td>Layout, calculations, working plans, two revision cycles</td></tr>
+      <tr><td><b>13R, each repeat building</b></td><td class="num r">$400 to $900</td>
+        <td>Where unit types and supply repeat</td></tr>
+      <tr><td><b>13 commercial tenant improvement</b></td><td class="num r">$900 to $2,200</td>
+        <td>Layout, calculations, working plans, one revision cycle</td></tr>
+      <tr><td><b>13 ground-up commercial</b></td><td class="num r">$2,500 to $6,000</td>
+        <td>Layout, calculations, working plans, two revision cycles</td></tr>
+      <tr><td><b>Calculations only</b></td><td class="num r">$300 to $650</td>
+        <td>Against a layout you supply</td></tr>
+      <tr><td><b>Hourly</b></td><td class="num r">$55/hr</td>
+        <td>Revisions beyond the included cycles, scope changes, consulting, as-builts</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="steps" style="margin-top:18px">
+    <div class="step"><span class="n">&bull;</span><div><b>Ranges, not single numbers, and why</b>
+      <p>Head count, ceiling complexity, storage arrangement and how good the backgrounds are move these
+         materially. I quote a fixed number per job once I have seen the drawings, and it does not move
+         afterwards.</p></div></div>
+    <div class="step"><span class="n">&bull;</span><div><b>Revision cycles are included, not billed</b>
+      <p>Responding to AHJ comments on my own work is part of the job, not a change order. Cycles beyond
+         those included, or changes you or the GC introduce, are hourly.</p></div></div>
+    <div class="step"><span class="n">&bull;</span><div><b>Ongoing work gets simpler</b>
+      <p>Once your standard details, preferred manufacturers and the jurisdictions you work in are set up,
+         repeat projects land at the lower end of these ranges. That is the point of an ongoing arrangement
+         rather than one-off jobs.</p></div></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap foot">
+  <span>First Pass Approval &middot; prepared for Bay Fire Sprinklers, Inc.</span>
+  <span>confirm all code references against the locally adopted edition</span>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s){return document.querySelector(s)};
+
+  try{ var st=localStorage.getItem('bf-theme'); if(st) document.documentElement.setAttribute('data-theme',st); }catch(e){}
+  $('#theme').addEventListener('click',function(){
+    var cur=document.documentElement.getAttribute('data-theme');
+    var dark = cur ? cur==='dark' : matchMedia('(prefers-color-scheme:dark)').matches;
+    var nx=dark?'light':'dark';
+    document.documentElement.setAttribute('data-theme',nx);
+    try{ localStorage.setItem('bf-theme',nx); }catch(e){}
+  });
+
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){
+      tabs.forEach(function(o){
+        var sel=o===t;
+        o.setAttribute('aria-selected',sel?'true':'false');
+        document.getElementById(o.getAttribute('aria-controls')).hidden=!sel;
+      });
+    });
+  });
+
+  var mixed=false;
+  function decide(){
+    var occ=$('#occ').value, st=+$('#stories').value, ht=+$('#height').value;
+    $('#storiesO').textContent=st;
+    $('#heightO').textContent=ht+' ft';
+    $('#mixYes').setAttribute('aria-pressed',mixed?'true':'false');
+    $('#mixNo').setAttribute('aria-pressed',mixed?'false':'true');
+
+    var std, why, flags=[];
+    var residential = (occ==='sf'||occ==='town'||occ==='res');
+
+    if(mixed && residential){
+      std='NFPA 13';
+      why='A non-residential occupancy makes this mixed use. Once that is in the building, the limited scope of 13R no longer covers it and the whole building falls under NFPA 13.';
+      flags.push(['no','The trap','A single ground-floor retail unit is enough to move an entire residential building from 13R to 13. Confirm the occupancy classification with the AHJ before pricing the job.']);
+    } else if(occ==='sf'){
+      std='NFPA 13D';
+      why='One and two family dwellings. The design objective is giving occupants time to escape, not property protection.';
+      flags.push(['chk','Water supply','13D jobs go wrong on supply, not layout. Confirm the available pressure and flow before committing to a fixed fee.']);
+    } else if(occ==='town'){
+      std='NFPA 13D or 13R';
+      why='Townhouses sit on the boundary. Configuration decides it: shared corridors and common areas generally push a block out of the 13D scope.';
+      flags.push(['chk','Check the configuration','Whether the units are genuinely separate dwellings or share means of egress is the deciding question. Worth settling with the AHJ in writing.']);
+    } else if(residential){
+      if(st<=4 && ht<=60){
+        std='NFPA 13R';
+        why='Residential occupancy within four storeys above grade and 60 feet. 13R is permitted here, designed primarily for life safety.';
+        flags.push(['ok','Within scope','Both limits are satisfied. Confirm how the adopted code measures height and counts storeys above grade, because that definition is where these get argued.']);
+      } else {
+        std='NFPA 13';
+        why = st>4 && ht>60
+          ? 'Beyond both the four storey and 60 foot limits for 13R.'
+          : (st>4 ? 'More than four storeys above grade, so outside the 13R limit even though the height is within it.'
+                  : 'Over 60 feet, so outside the 13R limit even though the storey count is within it.');
+        flags.push(['chk','Close to the line','One limit is exceeded and the other is not. How the adopted code measures height and counts storeys above grade decides this, so get it confirmed rather than assumed.']);
+      }
+    } else {
+      std='NFPA 13';
+      why='Commercial, assembly, institutional and storage occupancies are outside the scope of both 13R and 13D.';
+      if(occ==='storage') flags.push(['chk','Storage arrangement','Commodity class, storage height and rack configuration drive the design far more than floor area does. This is where the scope and the fee are really decided.']);
+      else flags.push(['chk','Hazard classification','Agree the occupancy hazard classification before layout. It sets the density and area of operation, and changing it later changes everything downstream.']);
+    }
+
+    flags.push(['chk','Local amendments','NFPA is the base. The adopted edition and the jurisdiction’s amendments govern, and they differ from the current NFPA edition more often than people expect.']);
+
+    $('#stdNote').textContent = residential ? 'residential' : 'non-residential';
+    $('#verdict').innerHTML='<p class="std">'+std+'</p><p class="why">'+why+'</p>';
+    $('#verdict').style.borderLeftColor = std==='NFPA 13' ? 'var(--fp)' : std==='NFPA 13R' ? 'var(--draft)' : 'var(--ok)';
+    $('#flags').innerHTML=flags.map(function(f){
+      return '<div class="flag"><span class="t '+f[0]+'">'+(f[0]==='no'?'Watch':f[0]==='ok'?'Clear':'Confirm')+
+             '</span><div><b>'+f[1]+'</b><span>'+f[2]+'</span></div></div>'; }).join('');
+  }
+  ['#occ','#stories','#height'].forEach(function(s){ $(s).addEventListener('input',decide); $(s).addEventListener('change',decide); });
+  $('#mixYes').addEventListener('click',function(){ mixed=true; decide(); });
+  $('#mixNo').addEventListener('click',function(){ mixed=false; decide(); });
+  decide();
+})();
+</script>
+
+</body>
+</html>
